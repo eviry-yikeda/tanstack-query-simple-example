@@ -1,0 +1,6 @@
+.flex {
+  margin: 0.5rem auto;
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+}
