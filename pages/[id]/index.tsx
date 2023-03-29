@@ -18,7 +18,7 @@ export default function Todo() {
     setAutoInvalidate(!autoInvalidate);
   };
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, isFetching, error } = useQuery({
     queryKey: ["todo", id],
     queryFn: () => getTodoItem(id as string),
     refetchOnWindowFocus: false,
@@ -53,22 +53,36 @@ export default function Todo() {
     deleteMutation.mutate(id);
   };
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-  if (error) {
-    return <div>Error</div>;
-  }
-
   return (
     <div className={styles.container}>
       <h1>TODO ITEM</h1>
-      {data && (
-        <TodoItem
-          todoItem={data}
-          onUpdate={handleUpdate}
-          onDelete={handleDelete}
-        />
+      <div>
+        <span>isFetching: </span>
+        <span style={{ color: isFetching ? "#FFF000" : "#00FFF0" }}>
+          {String(isFetching)}
+        </span>
+      </div>
+      <div>
+        <span>isLoading: </span>
+        <span style={{ color: isLoading ? "#FFF000" : "#00FFF0" }}>
+          {String(isLoading)}
+        </span>
+      </div>
+      {isLoading ? (
+        <div className={styles.flex}>
+          <div>Loading...</div>
+          {/* <button onClick={() => refetch()}>refetch</button> */}
+        </div>
+      ) : error ? (
+        <div>Error</div>
+      ) : (
+        data && (
+          <TodoItem
+            todoItem={data}
+            onUpdate={handleUpdate}
+            onDelete={handleDelete}
+          />
+        )
       )}
       <h2>queryClient methods</h2>
       <div className={styles.flex}>

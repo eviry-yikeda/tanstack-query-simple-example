@@ -16,7 +16,7 @@ export default function Home() {
     data,
     isLoading,
     // refetch,
-    // isFetching,
+    isFetching,
     error,
   } = useQuery({
     queryKey: ["todo"],
@@ -27,9 +27,6 @@ export default function Home() {
     // refetchInterval: 1000 * 60,
     // enabled: false,
   });
-
-  // console.log("isLoading", isLoading);
-  // console.log("isFetching", isFetching);
 
   const [autoInvalidate, setAutoInvalidate] = useState<boolean>(true);
   const handleAutoInvalidate = () => {
@@ -81,6 +78,18 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <h1>TODO ITEMS</h1>
+      <div>
+        <span>isFetching: </span>
+        <span style={{ color: isFetching ? "#FFF000" : "#00FFF0" }}>
+          {String(isFetching)}
+        </span>
+      </div>
+      <div>
+        <span>isLoading: </span>
+        <span style={{ color: isLoading ? "#FFF000" : "#00FFF0" }}>
+          {String(isLoading)}
+        </span>
+      </div>
       {isLoading ? (
         <div className={styles.flex}>
           <div>Loading...</div>
